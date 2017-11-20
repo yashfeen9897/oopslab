@@ -1,0 +1,1171 @@
+
+Q1. Write a  C++ program to find the number of vowels present in the given character array using pointer arithmetic.
+sol :	
+#include<iostream>
+#include<conio.h>
+using namespace std;
+int main()
+{
+	char c[100];
+	int vowelCount=0;
+	char *p;
+	cout<<"Enter a String to find no. of vowels in it :"<<endl;
+	gets(c);
+	p=c;
+	while(*p!='\0')
+	{
+		if(*p=='A' || *p=='E' || *p=='I' || *p=='O' || *p=='U' || *p=='a' || 				*p=='e' || *p=='i' || *p=='o' || *p=='u')
+			vowelCount++;
+			*p++;
+	}
+	cout<<"Total number of vowels in the given String is : "<<vowelCount;
+	getch();
+	return 0;
+}
+ 
+
+Q2.Write a C++ program to print the given number in reverse order.Use functions with return type and without return type for reversing the number.
+sol:
+#include<iostream>
+#include<conio.h>
+using namespace std;
+void Reverse(int n)               
+{
+	int output=0,r=0;
+	while(n>0)
+	{
+		r=n%10;
+		output=output*10+r;
+		n=n/10;
+	}
+	cout<<"Reversed number is : "<<output<<endl;
+}
+
+int ReverseRet(int n)              //Function with return Type
+{
+	int output=0,r=0;
+	while(n>0)
+	{
+		r=n%10;
+		output=output*10+r;
+		n=n/10;
+	}
+	return output;
+}
+
+int main()
+{
+	int num=0;
+	cout<<"Enter a number to be reverse"<<endl;
+	cin>>num;
+	Reverse(num);
+	int res=ReverseRet(num);
+	cout<<"Returned Reversed number is : "<<res<<endl;
+	getch();
+	return 0;
+}
+ 
+
+Q3.Write a C++ program to perform various arithmetic operations such as addition, subtraction,division,modulus and multiplication using inline function.
+sol :
+#include<iostream>
+#include<conio.h>
+using namespace std;
+inline double sum(int size, double a[])
+{
+	double sum=0;
+	for(int i=0;i<size;i++)
+	{
+		sum+=a[i];
+	}
+	return sum;
+}
+inline double sub(int size, double a[])
+{
+	double diff=a[0];
+	for(int i=1;i<size;i++)
+	{
+		diff-=a[i];
+	}
+	return diff;
+}
+inline double mul(int size, double a[])
+{
+	double prod=1;
+	for(int i=0;i<size;i++)
+	{
+		prod*=a[i];
+	}
+	return prod;
+}
+inline double div(double dividend, double divisor)
+{
+	double div=1;
+	div=dividend/divisor;
+	return div;
+}
+inline int mod(int a, int b)
+{
+	return (a%b);
+}
+int main()
+{
+	int size=0,maxSize=50;
+	int ch,a,b;
+	double arr[maxSize];
+	double dividnd,dvsr;
+	while(ch!=5)
+	{
+		cout<<"\nMenu : "<<endl;
+		cout<<"1-Addition\n"<<"2-Subtraction\n"<<"3-Multiplication					\n"<<"4-division\n"<<"5-Modulus\n"<<"6-Exit\n";
+		cout<<"Enter your choice : ";
+		cin>>ch;
+		switch(ch)
+		{
+			case 1 : cout<<"Enter the count of numbers : ";
+				  cin>>size;
+				  cout<<"Enter numbers :\n";
+				  for(int i=0;i<size;i++)
+					 cin>>arr[i];
+				 cout<<"Sum of given numbers is : "<<sum(size,arr);
+				  break;
+		case 2 :    cout<<"Enter the count of numbers : ";
+			     cin>>size;
+			     cout<<"Enter numbers :\n";
+			      for(int i=0;i<size;i++)
+				    cin>>arr[i];
+			      cout<<"Difference of given numbers is:"<<sub(size,arr);
+				 break;
+		case 3 :    cout<<"Enter the count of numbers : ";
+			     cin>>size;
+			     cout<<"Enter numbers :\n";
+			     for(int i=0;i<size;i++)
+					cin>>arr[i];
+			    cout<<"Product of given numbers is : "<<mul(size,arr);
+			     break;
+		case 4  :   cout<<"Enter dividend : ";
+			     cin>>dividnd;
+			     cout<<"Enter divisor : ";
+			     cin>>dvsr;
+			     cout<<"Division is : "<<div(dividnd,dvsr);
+			     break;
+		case 5 :    cout<<"Enter a \n";
+			     cin >> a;
+			     cout<<"Enter b \n";
+			     cin >> b;
+			     cout<<"Modulus is  : "<<mod(a,b);
+			     break;
+		case 6  :   cout<<"Exiting...";
+			     break;
+		default  :  cout<<"Wrong choice...Choose again\n";			 
+		}
+	}
+	
+	getch();
+	return 0;
+}
+
+ 
+ 
+
+Q4.Create a class for counting the number of objects created and destroyed within various blocks using constructors and destructors.
+sol : 
+#include<iostream>
+#include<conio.h>
+using namespace std;
+
+class CountingObj
+{
+public :
+	static int count;
+	CountingObj()
+	{
+		count++;
+		cout<<"Object Created..,Number of objects : "<<count<<endl;
+	}	
+	~CountingObj()
+	{
+		count--;
+		cout<<"Object destroyed.,";
+		cout<<"Number of objects : "<<count<<endl;
+	}
+};
+
+int CountingObj :: count=0;
+
+int main()
+{
+	CountingObj o1;
+	CountingObj o2;
+	CountingObj o3;
+	o1.~CountingObj();
+	o2.~CountingObj();
+	CountingObj o4;
+	getch();
+	return 0;
+}
+
+ 
+
+Q5.Write a C++ program to create 3 objects for a class named pntr_obj with data members such as roll_no & name.Create a member function set_data( ) for setting the data values and print( ) member fuction to print which object has invoked it using 'this' pointer.
+sol :
+#include <iostream>
+#include <conio.h>
+using namespace std;
+
+class pntr_obj	
+{
+	int roll_no;
+ 	string name;
+
+ 	public:
+ 		void set_data(int roll_no,string name)
+ 		{
+ 			this->roll_no = roll_no;
+ 			this->name = name ;
+ 		};
+		void print()
+ 		{
+ 			cout<<"Roll No.: "<<this->roll_no<<endl;
+ 			cout<<"Name    : "<<this->name<<endl<<endl;
+ 		}
+ };
+int main()
+{
+	pntr_obj obj1;
+ 	pntr_obj obj2;
+ 	pntr_obj obj3;
+
+ 	obj1.set_data(1,"John");
+ 	obj2.set_data(2,"Sunita");
+ 	obj3.set_data(3,"Rohit");
+
+ 	obj1.print();
+ 	obj2.print();
+ 	obj3.print();	
+ }
+
+
+ 
+
+Q6.Write a C++ program to implement virtual function (polymorphism) by creating a base class c_polygon which has virtual function area( ).Two classes c_rectangle and c_triangle derived from c_polygon and they have area( ) to calculate and return the area of recangle and triangle respectively.
+sol :
+#include <iostream>
+#include <conio.h>
+using namespace std;
+
+class c_polygon
+{
+ 	public:
+		virtual void area()
+ 		{
+ 			cout << "Method of c_polygon Class ";
+ 		}
+};
+
+class c_rectangle : public c_polygon
+{
+ 	public:
+ 		void area(int a,int b)
+ 		{
+ 			cout << "Area of rectangle is : "<< a * b <<endl;
+ 		}
+};
+
+class c_triangle : public c_polygon
+{
+ 	public:
+		void area(int base, int height)
+ 		{
+ 			cout << "Area of triangle is  : "<<0.5*base*height<<endl;	
+ 		}
+};
+
+int main()
+{
+ 	c_triangle tri;
+ 	c_rectangle rect;
+ 	tri.area(35,25);
+ 	rect.area(5,4);
+}
+
+OUTPUT :
+ 
+
+Q7.Write a C++ program to count the number of persons inside a bank, by increasing count whenever a person enters a bank , using an increment (++) operator overloading function, and decrease the count whenever a person leaves the bank, using a decrement (--) operator overloading function inside a class.
+sol :
+#include <iostream>
+#include <conio.h>
+#include <stdlib.h>
+using namespace std;
+
+class PersonInBank
+{
+ 	public:
+ 		int operator ++ (int PersonCnt)
+ 		{
+ 			PersonCnt++;
+ 			return PersonCnt;
+ 		}  
+ 		int operator -- (int PersonCnt)
+ 		{
+ 			PersonCnt--;
+ 			return PersonCnt;
+ 		}
+ };
+
+ int main()
+ {
+ 	int numOfPersons = 0 ;
+ 	int ch;
+ 	while ( 1 )
+ 	{
+ 		cout << "\nEnter your choice :\t 1.Enters\t  2.Leaves\t  3.Print\t  						4. Exit."<<endl;
+ 		cin >> ch;
+
+ 		switch (ch)
+ 		{
+ 			case 1 :
+ 				numOfPersons = ++(numOfPersons);
+ 				cout << "Total number of person in bank is: ";
+ 				cout << numOfPersons;
+ 				cout << endl;
+ 				break;
+ 			case 2 : 
+ 				numOfPersons= --(numOfPersons);
+ 				cout << "Total number of person in bank is: ";
+ 				cout << numOfPersons;
+ 				cout << endl;
+ 				break;
+ 			case 3 :
+ 				cout << "Total number of person in bank is: ";
+ 				cout << numOfPersons;
+ 				cout << endl;
+ 				break;
+ 			case 4 :
+ 				cout<<"Exiting...";
+ 				exit(1);
+ 			default :
+ 				cout << "Enter a correct choice."<< endl;
+ 				break;
+ 		}
+ 	}
+ 	return 0;
+ }
+
+
+ 
+
+Q8. Write a C++ program to create two objects of a class called company and add their data members using an operator overloaded function for '+' operator and '-' operator.
+sol :
+#include<iostream>
+using namespace std;
+
+class company{
+		int productId;
+	public:
+ 		company() {
+		 	productId=0;
+		 		}
+ 		company(int data) {
+ 			productId = data;
+ 			 	}
+ 		void getdata()
+ 		{
+     		cout<<"enter Product Id :\n";
+     		cin>>productId;
+ 		}
+ 		int value() {
+ 			return productId;
+ 				}
+
+ 		company operator+(company x)
+ 		{
+     		return company(productId+x.productId);
+ 		}
+
+		company operator-(company x)
+ 		{
+     		return company(productId-x.productId);
+ 		}
+ };
+
+ int main()
+ {
+ company c1,c2,c3;
+ c1.getdata();
+ c2.getdata();
+
+ c3=c1+c2;
+ cout<<"sum        : "<<c3.value()<<endl;
+ c3=c1-c2;
+ cout<<"Difference : "<<c3.value()<<endl;
+
+ return 0;
+ }
+
+ 
+
+Q9.Write a program in C++ to create a class matrix and overload +,- operator to perform matrix addition and subtraction.
+Sol :
+#include<iostream>
+#include<stdlib.h>
+#define n 3
+using namespace std;
+
+class matrix
+{
+ 		int mat[100][100];
+ 	public:
+ 		void get_data();
+ 		matrix operator+(matrix mat2);
+ 		matrix operator-(matrix mat2);
+ 		void Display();
+};
+
+void matrix::get_data()
+	{
+ 		int i,j;
+ 		for(i=0;i<n;i++)
+ 		{
+ 			for(j=0;j<n;j++)
+ 				cin>>mat[i][j];
+ 		}
+ 	}
+matrix matrix::operator+(matrix mat2)
+{
+ 	int i,j;
+ 	for(i=0;i<n;i++)
+ 	{
+ 		for(j=0;j<n;j++)
+ 			mat[i][j]=mat[i][j]+mat2.mat[i][j];
+ 	}
+		return *this;
+}
+
+matrix matrix::operator-(matrix mat2)
+{
+	int i,j;
+ 	for(i=0;i<n;i++)
+ 	{
+ 		for(j=0;j<n;j++)
+ 			mat[i][j]=mat[i][j]-mat2.mat[i][j];
+ 	}
+ 	return *this;
+}
+
+void  matrix::Display()
+{
+	int i,j;
+	cout<<"Matrix : \n";
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+ 		{
+			cout<<mat[i][j]<<"  ";
+ 		}
+ 		cout<<"\n";
+ 	}
+}
+
+int main()
+{
+	matrix mat1,mat2,mat3;
+	int c;
+ 	while(1)
+ 	{	
+ 		cout<<"\nEnter your choice :\n1.Matrix Addition\n2.Matrix Subtraction\n3.Exit\n";
+ 		cin>>c;
+ 		cout<<"Enter first matrix\n";
+ 		mat1.get_data();
+		cout<<"Enter second matrix\n";
+ 		mat2.get_data();
+ 		switch(c)
+ 		{
+ 			case 1:mat3=mat1+mat2;
+ 				mat3.Display();
+ 				break;
+
+ 			case 2:mat3=mat1-mat2;
+ 				mat3.Display();
+ 				break;
+ 			case 3: exit(1);
+ 			default:cout<<"Wrong choice , Enter correct choice\n";
+ 		}
+ 	}
+ 	return 0;
+ }
+
+
+ 
+ 
+
+Q10.Write a  program to accept five different numbers by creating a class called friendfunc1 and friendfunc2  taking  2 and 3 arg respectively and calculate the average of these numbers by passing object of class to friend function.
+Sol :
+#include<iostream>
+using namespace std;
+
+class friendfunc2;
+
+class friendfunc1
+{
+    	int mem1,mem2;
+	public:
+    		friendfunc1(int x,int y)
+     		{
+    			mem1=x;
+        			mem2=y;
+     		}
+   	   friend float average(friendfunc1 f1,friendfunc2 f2);
+};
+
+
+class friendfunc2
+{
+	    int mem1,mem2,mem3;
+   	public:
+    		friendfunc2(int x,int y,int z)
+   		 {
+        			mem1=x;
+        			mem2=y;
+        			mem3=z;
+    		}
+
+   	 friend float average(friendfunc1 f1,friendfunc2 f2);
+};
+
+float average(friendfunc1 f1, friendfunc2 f2)
+{
+    	return float((f1.mem1 + f1.mem2 + f2.mem1 + f2.mem2 + 						f2.mem3))/float(5);
+}
+
+int main()
+{
+    	 friendfunc1 obj1(8,6);
+  	 friendfunc2 obj2(12,15,20);
+	 float ans=average(obj1,obj2);
+    	cout<<"Average of the numbers is : "<<ans<<endl;
+}
+
+
+
+Q11.Write a program to accept the  student details such as name and 3 different marks by get_data( )  method and display the name and average of marks using display( ) method.Define a friend class for calculating the average of marks using method mark_avg( ).
+Sol :
+#include<iostream>
+#include<math.h>
+using namespace std;
+
+class student
+{
+		float sub1,sub2,sub3;
+		char stu_name[100];
+ 	public :
+  		void get_data();
+ 		friend float mark_avg(student s);	
+ 		void Display();
+};
+	
+void student  ::  get_data()
+{
+	cout<<"\nEnter Student name  : ";
+ 	cin>>stu_name;
+ 	cout<<"Enter Maths marks   : ";
+ 	cin>>sub1;
+ 	cout<<"Enter Science marks : ";
+ 	cin>>sub2;
+ 	cout<<"Enter English marks : ";
+ 	cin>>sub3;
+}
+
+float mark_avg(student s)
+{
+	return float((s.sub1+s.sub2+s.sub3))/float(3);
+}
+
+void student :: Display()
+{
+	cout<<"\nName of student : "<<stu_name;
+	cout<<"\nAverage  marks  : "<<mark_avg(*this)<<"\n";	
+}
+
+int main()
+{
+	student s1,s2;
+	s1.get_data();
+	s1.Display();
+ 	s2.get_data();
+ 	s2.Display();
+ 	return 0;
+}
+
+
+ 
+
+Q12.Write a program that uses a function template called Min to determine the smaller of  two arguments.The program should work for integers, characters and floating-point number as arguments to this function.
+Sol :
+ #include <iostream>
+using namespace std;
+
+// template function
+template <class T>
+T Min(T n1, T n2)
+{
+	return (n1 < n2) ? n1 : n2;
+}
+
+int main()
+{
+	int i1, i2;
+	float f1, f2;
+	char c1, c2;
+
+	cout << "Enter two integers:\n";
+	cin >> i1 >> i2;
+	cout << Min(i1, i2) <<" is smaller." << endl;
+
+	cout << "\nEnter two floating-point numbers:\n";
+	cin >> f1 >> f2;
+	cout << Min(f1, f2) <<" is smaller." << endl;
+
+	cout << "\nEnter two characters:\n";
+	cin >> c1 >> c2;
+	cout << Min(c1, c2) << " has smaller ASCII value.";
+
+	return 0;
+}
+
+
+ 
+
+Q13.Write a program to explain class template by creating a template T for a class named pair having two data members of type T which are inputted by a constructor and a member function get-max( ) return the greatest of two numbers to main.
+Sol :
+#include <iostream>
+using namespace std;
+
+template <class T>
+class Pair
+{
+		T a,b;
+	public:
+		Pair(T x,T y)
+ 		{
+ 			a = x ;
+ 			b = y ;
+ 		}
+
+ 		T get_Max()
+ 		{
+ 			return (a > b) ? a : b;
+ 		}
+};
+
+int main()
+{
+	char l,w;
+ 	Pair<int> integer(35,20);
+ 	cout << "Maximum of 35 and 20  is : "<< integer.get_Max() << endl;
+ 	
+ 	Pair<float> flt(15.3,37.1);
+ 	cout << "\n\nMaximum of 15.3 and 37.1  is : "<< flt.get_Max() << endl;
+ 	
+ 	return 0;
+ }
+
+
+ 
+
+Q14.Write a program in C++ to  overload Cin , Cout  stream operators to input and  objects of a class student which contains student details like name, rollno. , class, age.
+Sol  :
+#include<iostream>
+using namespace std;
+class student
+{
+	protected:
+ 		char name[50];
+ 		int cls,rollno,age;
+ 	public:
+ 		friend istream & operator >>(istream &din ,student &a)
+ 		{
+ 			cout<<"Enter Student Details :-"<<"\nEnter   Name :";
+ 			din>>a.name;
+ 			cout<<"Enter  Class :";
+ 			din>>a.cls;
+ 			cout<<"Enter rollno :";
+ 			din>>a.rollno;
+ 			cout<<"Enter  age   :";
+ 			din>>a.age;
+ 			return din;
+ 		}
+ 		friend ostream &operator<<(ostream &dout ,student &a)
+ 		{
+ 			dout<<"Student Details :";
+ 			dout<<"\nName   : "<<a.name;
+ 			dout<<"\nClass  : "<<a.cls;
+ 			dout<<"\nRollno : "<<a.rollno;
+ 			dout<<"\nAge    : "<<a.age;
+ 			return dout;
+ 		}
+ };
+ int main()
+ {
+ 	student s;
+ 	cin>>s;
+ 	cout<<s;
+ 	return 0;
+ }
+
+
+ 
+
+Q15.Write a class 3D which inherits another class 2D, for 3 dimensional calculations .Using these classes define any 2 points in a 3D space and find the distance between them.The formula for finding the distance between any 2 pts in 3D space is  :
+		Distance  = SquareRoot(xd*xd+yd*yd+zd*zd)
+	Where,  xd=x2-x1 ,  yd=y2-y1 and zd=z2-z1.
+Sol  :
+#include <iostream>
+#include <math.h>
+using namespace std;
+
+class twoD
+{
+ 	protected:
+ 		int x1,y1,x2,y2;
+};
+
+class threeD : public twoD
+{
+	protected:
+		int z1,z2;
+	public :
+ 		void getValue()
+ 		{
+ 			cout << "Enter the value of x1,x2,y1,y2 and z1, z2: "<<endl;
+ 			cin >> x1 >> x2 >> y1 >> y2 >> z1 >> z2 ;		
+ 		}
+
+ 		void calculateDistance()
+ 		{
+ 			cout << "The distance is :" <<sqrt(((x2-x1) * (x2-x1) ) 					+( (y2-y1) * (y2-y1) ) +((z2-z1) * (z2-z1) )) << endl;
+		}
+ };
+
+int main()
+{
+	threeD threed;
+ 	threed.getValue();
+ 	threed.calculateDistance();
+ 	return 1;
+}
+
+
+ 
+
+
+Q16.Write a program in java to implement a calculator having addition and subtraction operations along with the concept of memory(M+) i.e.  to store the current value on the screen for later use.
+Sol  :
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.text.DecimalFormat;
+
+class Calculator{
+      JTextField mOperand1, mOperator, mOperand2, mAnswer, mFocusedField;
+      JButton mEqualsButton, mClearButton, mDeleteButton, mZeroButton,           	mDecimalButton, mMemSubButton, mMemMulButton, 	mMemDivButton,   mSaveResult;
+    JPanel mCalculatorPanel, mNumbersPanel, mOperatorsPanel,  	mInputPanel, mButtonsPanel, mLowerButtonPanel;
+    JFrame mCalculatorBox;
+    JButton[] mNumbers, mOperators;
+    Double mSavedNumber = null;
+    JLabel mMemoryStatus;
+
+    public static void main(String[] args) {
+        	Calculator calculator = new Calculator( );
+        	calculator.go( );
+    }
+    private void go( ) {
+        		initialiseComponents( );
+        		setupCalculator( );
+        		addEventListenersToComponents( );
+    }
+
+    private void initialiseComponents( ) {
+       	 mCalculatorBox = new JFrame();
+        	mMemoryStatus = new JLabel();
+	mOperand1 = new JTextField("Operand1", 10);
+        	mOperator = new JTextField(4);
+        	mOperand2 = new JTextField("Operand2", 10);
+        	mAnswer = new JTextField("Answer", 10);
+        	mSaveResult = new JButton("MM");
+        	mClearButton = new JButton("CC");
+        	mDeleteButton = new JButton("<-");
+        	mInputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        	mCalculatorPanel = new JPanel();
+	mNumbers = new JButton[9];
+        for (int i = 0; i < 9; i++) {
+            	mNumbers[i] = new JButton("   " +String.valueOf(i+1) + "   ");
+        	}
+        mNumbersPanel = new JPanel(new GridLayout(3, 3));
+        mOperators = new JButton[9];
+        mOperators[0] = new JButton("+");
+        mOperators[1] = new JButton("-");
+        mOperators[2] = new JButton("*");
+        mOperators[3] = new JButton("/");
+        mOperators[4] = new JButton("%");
+        mOperators[5] = new JButton("^");
+        mOperators[6] = new JButton("sqrt");
+        mOperators[7] = new JButton("M+");
+        mOperators[8] = new JButton("^2");
+        mOperatorsPanel = new JPanel(new GridLayout(3,3));
+
+        mButtonsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        mZeroButton = new JButton("   0   ");
+        mDecimalButton = new JButton("   .   ");
+        mEqualsButton = new JButton("   =   ");
+        mMemSubButton = new JButton("  M-  ");
+        mMemMulButton = new JButton("  M*  ");
+        mMemDivButton = new JButton("  M/  ");
+  mLowerButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+    }
+
+private void setupCalculator() {
+     BoxLayout boxLayout = new BoxLayout(mCalculatorBox.getContentPane(), 							BoxLayout.Y_AXIS);
+        mCalculatorBox.setLayout(boxLayout);
+        mInputPanel.add(mOperand1);
+        mInputPanel.add(mOperator);
+        mInputPanel.add(mOperand2);
+        mInputPanel.add(mAnswer);
+        mInputPanel.add(mSaveResult);
+        mInputPanel.add(mDeleteButton);
+        mInputPanel.add(mClearButton);
+        mCalculatorBox.add(mInputPanel);
+
+        for (JButton button : mNumbers) {
+            mNumbersPanel.add(button);
+        }
+        mButtonsPanel.add(mNumbersPanel);
+
+        for (JButton button : mOperators ) {
+            mOperatorsPanel.add(button);
+        }
+        mButtonsPanel.add(mOperatorsPanel);
+        mCalculatorBox.add(mButtonsPanel);
+        mLowerButtonPanel.add(mZeroButton);
+        mLowerButtonPanel.add(mDecimalButton);
+        mLowerButtonPanel.add(mEqualsButton);
+        mLowerButtonPanel.add(mMemSubButton);
+        mLowerButtonPanel.add(mMemMulButton);
+        mLowerButtonPanel.add(mMemDivButton);
+        mCalculatorBox.add(mLowerButtonPanel);
+
+        mMemoryStatus.setText("Memory:= " + String.valueOf(mSavedNumber));
+        mCalculatorBox.add(mMemoryStatus);
+
+mCalculatorBox.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE		);
+        mCalculatorBox.setVisible(true);
+        mCalculatorBox.setSize(415, 215);
+    }
+
+    private void addEventListenersToComponents() {
+        	mOperand1.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                	mFocusedField = mOperand1;
+                	if (mOperand1.getText().matches("[-+]?\\d*\\.?\\d+")) {
+                    		return;
+                	}
+                mFocusedField.setText("");
+            }
+            public void focusLost(FocusEvent e) {}
+        });
+        mOperand2.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                mFocusedField = mOperand2;
+                if (mFocusedField.getText().matches("[-+]?\\d*\\.?\\d+")) {
+                    return;
+                }
+                mFocusedField.setText("");
+            }
+            public void focusLost(FocusEvent e) {
+
+            }
+        });
+        for (JButton button: mOperators) {
+            button.addActionListener(new ButtonActionListener(mOperator));
+        }
+
+        mDeleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (mFocusedField.getText().isEmpty() ) {
+                    return;
+                }
+                mFocusedField.setText(mFocusedField.getText().substring(0, mFocusedField.getText().length() - 1));
+            }
+        });
+        mClearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mOperand1.setText("");
+                mOperand2.setText("");
+                mAnswer.setText("");
+                mOperator.setText("");
+            }
+        });
+        mSaveResult.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                    if (mAnswer.getText().matches("[-+]?\\d*\\.?\\d+")) {
+                        mSavedNumber = Double.parseDouble(mAnswer.getText());
+                        mMemoryStatus.setText("Memory:= " + String.valueOf(mSavedNumber));
+                    }
+            }
+        });
+
+        mMemSubButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mOperator.setText("M-");
+                if (mOperator.getText().trim().equals("M-")) {
+                    mOperand1.setText(String.valueOf(mSavedNumber));
+                }
+            }
+        });
+        mMemMulButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mOperator.setText("M*");
+                if (mOperator.getText().equals("M*")) {
+                    mOperand1.setText(String.valueOf(mSavedNumber));
+                }
+            }
+        });
+        mMemDivButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                mOperator.setText("M/");
+                if (mOperator.getText().trim().equals("M/")) {
+                    mOperand1.setText(String.valueOf(mSavedNumber));
+                }
+            }
+        });
+
+
+        for (JButton button : mNumbers) {
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    mFocusedField.setText(mFocusedField.getText() + e.getActionCommand().trim());
+                }
+            });
+        }
+
+        mZeroButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mFocusedField.setText(mFocusedField.getText() + e.getActionCommand().trim());
+            }
+        });
+
+        mDecimalButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (mFocusedField.getText().contains(".")) {
+                    return;
+                }else {
+                    mFocusedField.setText(mFocusedField.getText() + e.getActionCommand().trim());
+                }
+            }
+        });
+
+        mEqualsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calculateResult();
+            }
+        });
+
+    }
+
+    private void calculateResult() {
+        double answer = 0;
+        DecimalFormat decimalFormat = new DecimalFormat("#.0000");
+        String operator = mOperator.getText();
+        if (String.valueOf(mOperand1.getText()).matches("[-+]?\\d*\\.?\\d+") && !String.valueOf(mOperand2.getText()).matches("[-+]?\\d*\\.?\\d+")) {
+            Double op1 = Double.parseDouble(mOperand1.getText());
+            if (operator.equals("sqrt")) {
+                answer = Math.sqrt(op1);
+            } else if (operator.equals("^2")) {
+                answer = Math.pow(op1, 2);
+            }
+            mAnswer.setText(String.valueOf(answer));
+            return;
+        }else if (!String.valueOf(mOperand1.getText()).matches("[-+]?\\d*\\.?\\d+") && String.valueOf(mOperand2.getText()).matches("[-+]?\\d*\\.?\\d+")) {
+            Double op2 = Double.parseDouble(mOperand2.getText());
+            if (operator.equals("sqrt")) {
+                answer = Math.sqrt(op2);
+            } else if (operator.equals("^2")) {
+                answer = Math.pow(op2, 2);
+            }
+            mAnswer.setText(String.valueOf(answer));
+            return;
+        }
+
+        double op1 = Double.parseDouble(mOperand1.getText()), op2 = Double.parseDouble(mOperand2.getText());
+        try {
+            switch (operator) {
+                case "+":
+                case "M+":
+                    answer = op1 + op2;
+                    break;
+                case "-":
+                case "M-":
+                    answer = op1 - op2;
+                    break;
+                case "*":
+                case "M*":
+                    answer = op1 * op2;
+                    break;
+                case "/":
+                case "M/":
+                    answer = op1 / op2;
+                    break;
+                case "^":
+                    answer = Math.pow(op1, op2);
+                    break;
+                default:
+                    return;
+            }
+        }catch (ArithmeticException e) {
+            mAnswer.setText("INVALID INPUT");
+        }
+        mAnswer.setText(String.valueOf(decimalFormat.format(answer)));
+    }
+}
+
+class ButtonActionListener implements ActionListener {
+
+    JTextField mField;
+    public ButtonActionListener(JTextField field) {
+        mField = field;
+    }
+    public void actionPerformed(ActionEvent e) {
+        mField.setText(e.getActionCommand().trim());
+    }
+}
+
+
+ 
+ 
+
+Q17.Write a program in C++ that acts as a contact manager. It saves the content of a file & retrieves them when asked by the user. Modules of the program include: Add, Delete, Search,Save.
+Sol  :
+#include <fstream>
+#include <iostream> 
+#include <stdlib.h>
+using namespace std;
+
+void add_contact()
+{
+	string name;
+	string mobile_no;
+ 	cout << "Enter name: " <<endl;
+ 	cin >> name;
+ 	cout << "Enter mobile_no: " << endl;
+ 	cin >> mobile_no;
+	ofstream myfile;
+	myfile.open("yash.txt",ios::app | ios :: out );
+ 	myfile  << name << endl << mobile_no <<endl ;
+	myfile.close();
+}
+
+void delete_contact()
+{
+	string name,line;
+	cout << "Give the name to be deleted: " <<endl;
+	cin >> name;
+	ifstream myfile;
+	ofstream temp;
+	myfile.open("yash.txt");
+	temp.open("temp.txt");
+ while ( getline(myfile,line))
+ {
+ 	if ( line != name )
+ 	{
+ 		temp << line << endl;
+ 	}
+ 	else
+ 	{
+ 	cout << "The name was present and deleted successfully.";
+ 		getline(myfile,line);
+ 		getline(myfile,line);
+ 	}
+}
+ 	myfile.close();
+ 	temp.close();
+ 	remove("yash.txt");
+ 	rename("temp.txt","yash.txt");
+ }
+
+int search_contact()
+{
+	string name,line;
+ 	cout << "Enter the name to be searched: " << endl;
+ 	cin >> name;
+ 	ifstream myfile;
+ 	myfile.open("yash.txt");
+ 	while ( getline(myfile,line))
+ 	{
+ 		if ( line == name)
+ 		{
+ 	cout << "Search successful!. The name is found."<< endl;
+ 			return 1;
+ 		}
+ 	}
+ 	cout << "Search unsuccessful. Name is not found .";
+ 	return 0;
+ }
+
+int main()
+{
+ 	int choice;
+ 	while (1)
+ 	{
+ 		cout << "\nMENU" <<endl;
+ 		cout << "1. Add \t\t2.Delete \t3.Search \t4.Save and 					Exit"<<endl;
+ 		cout << "Enter your choice: " <<endl;
+ 		cin >> choice;
+ 		switch(choice)
+ 		{
+ 			case 1: 
+ 				add_contact();
+ 				break;
+ 			case 2: 
+ 				delete_contact();
+ 				break;
+ 			case 3:
+ 				search_contact();
+ 				break;
+ 			case 4:
+ 				cout<<"Saving details...";
+ 				exit(1);
+ 			default:
+ 				cout<< "Please Enter a correct choice.";
+ 				break;
+		}
+	}
+}
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
