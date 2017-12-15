@@ -1,0 +1,892 @@
+/*PROGRAMS FROM CLASS */
+Q1.Define a class ‘Matrix’ which simulates a two dimensional array of integers. The class should have:
+  i) . Two private integers representing order of matrix.
+ ii) . A private pointer to array that holds the data value.
+iii) . A public one argument constructor to define a square matrix.
+iv) . A public two argument constructor to define a rectangular 	matrix.
+  v) . Public constructor to copy contents from matrix object to 	current instance
+ vi) . A private function to input order of matrix.[called by (vii)]
+vii) . Public instance function to input data in matrix.
+viii). Public instance function to print matrix on screen.
+ ix) . Public instance function to print transpose of matrix on 	screen.
+x)   . Public instance function to return transpose of matrix.
+xi) . Public non-instance function that returns sum of two matrices.
+xii). Public non-instance function that returns difference of two 	matrices.
+xiii).Public instance function to return matrix multiplied by scalar 	K. K is received as argument in this function.
+xiv). Public non instance function returns product of two matrices.
+xv). Destructor that deletes the dynamically allocated memory to 	the array.
+
+Sol :
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+class Matrix
+{
+public:
+	Matrix(); //Default constructor
+	Matrix(int m, int n); //Main constructor
+	void setVal(int m, int n); //Method to set the val of [i,j]th-entry
+	void printMatrix(); //Method to display the matrix
+	~Matrix(); //Destructor
+
+private:
+	int m, n;
+	int **p;
+
+	void allocArray()
+	{
+		p = new int*[m];
+		for(int i = 0; i < m; i++)
+		{
+			p[i] = new int[n];
+		}
+	}
+};
+ 
+Matrix::Matrix() : Matrix(1,1) {}
+
+Matrix::Matrix(int m, int n)
+{
+	allocArray();
+	for(int i = 0; i < m; i++)
+	{
+		for(int j = 0; j < n; j++)
+		{
+			p[i][j] = 0;
+		}
+	}
+}
+
+
+Matrix :: ~Matrix()
+{
+	for(int i = 0; i < m; i++)
+	{
+		delete [] p[i];
+	}
+	delete [] p;
+}
+
+
+void Matrix::setVal(int m, int n)
+{
+	int newVal = 0;
+	p[m][n] = newVal;
+}
+
+
+void Matrix::printMatrix()
+{
+	for(int i = 0; i < m; i++)
+	{
+		for(int j = 0; j < n; j++)
+		{
+			cout << p[m][n] << "  " << endl;
+		}
+	}
+}
+
+
+int main()
+{
+	int d1 = 4;
+	int d2 = 3;
+
+	Matrix object;
+
+	//create 4x3 dynamic 2d array
+	int ** matrix = new int*[d1];
+	for(int j = 0; j < d1; j++)
+	{
+		matrix[j] = new int[d2];
+	}
+
+	cout << "Enter values " << endl;
+	for(int i = 0; i < d1; ++i)
+	{
+		for(int j = 0; j < d2; ++j)
+		{
+			cin >> matrix[i][j];
+		}
+	}
+
+	object.printMatrix();
+
+	return 0;
+}
+
+
+Q2.Define a class ‘Date’ such that following specifications are met:
+a). Private integers to represent date, month, year.
+b). 3 argument public constructor to initialize the date object. 
+c). Perform suitable validations.
+d). Public member functions to change value of date, month, year 	components.
+e). Public function that prints date as : MONTH_NAME DD, YYYY.
+ f).  Public function that returns whether two date objects have same value or not.
+Sol  :
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Date
+{
+private:
+	int month, day, year;
+public:
+	Date( );
+	Date(int, int, int);
+	~Date( ){ }
+	void setDay(int);
+	void setMonth(int);
+	void setYear(int);
+	void showDate1( );
+	void showDate2( );
+	void showDate3( );
+	void compareDate(Date d1, Date d2);
+
+};
+Date::Date( )
+{
+	month = 0, day = 0, year = 0;
+}
+Date::Date(int Month, int Day, int Year)
+{
+	month = Month;
+	day = Day;
+	year = Year;
+}
+void Date::setDay(int d)
+{
+	if (d < 1 && d > 31)
+		cout << "The day is invalid" << endl;
+	else
+	day = d;
+	
+}
+void Date::setMonth(int m)
+{
+	if (m < 1 && m > 12)
+		cout << "The month is invalid" << endl;
+	else
+	month = m;
+	
+}
+void Date::setYear(int y)
+{
+	if (y < 1950 && y > 2020)
+		cout << "The year is invalid" << endl;
+	else
+		year = y;
+}
+void Date::showDate1()
+{
+	cout << month << " /" << day << " /" << year << endl;
+}
+void Date::showDate2()
+{
+	string monthName[] = { "January", "February", "March",
+		"April", "May", "June", "July",
+		"August", "September", "October",
+		"November", "December" };
+	cout << monthName[month - 1] << "  " << day << "  " << year << endl;
+}
+void Date::showDate3()
+{
+	string monthName[] = { "January", "February", "March",
+		"April", "May", "June", "July",
+		"August", "September", "October",
+		"November", "December" };
+	cout << day << "  " << monthName[month - 1] << "  " << year << endl;
+}
+
+void Date :: compareDate(Date d1, Date d2)
+{
+	if(d1.day == d2.day && d1.month == d2.month && d1.year == d2.year)
+		cout<<"\nThe dates are same..!";
+	else
+		cout<<"\nThe dates are different";
+}
+
+int main()
+{
+	int Month, Day, Year;
+	string monthName[] = { "January", "February", "March",
+		"April", "May", "June", "July",
+		"August", "September", "October",
+		"November", "December" };
+
+
+	cout << "Please enter a month (between 1 - 12) " << endl;
+	cin >> Month;
+	
+	cout << "Please enter a day (between 1 - 31) " << endl;
+	cin >> Day;
+	
+	cout << "Please enter a year (between 1950 - 2020) " << endl;
+	cin >> Year;
+		
+	
+	Date newDate(Month, Day, Year);
+	newDate.showDate1();
+	newDate.showDate2();
+	newDate.showDate3();
+	
+	Date d1(12,8,14);
+	Date d2(12,8,14);
+	d1.compareDate(d1,d2);
+	
+	Date d3(16,10,14);
+	Date d4(12,8,14);
+	d3.compareDate(d3,d4);
+	return 0;
+}
+
+OUTPUT : 
+
+ 
+
+Q3.Write a program in C++ to add two complex numbers using friend function.
+Sol  :
+#include <iostream>
+using namespace std;
+
+class complex{
+	  private:
+	  		  float real;
+	  		  float imag;
+	  public:
+	  		 complex( ){ }
+	  		 void read( ) 
+			{
+			 	cout<<"Enter real part  :\t";
+			 	cin>>real;
+			 	cout<<"Enter imag part  :\t";
+			 	cin>>imag;
+			}
+	      		void show( )
+	          		{
+			   	cout<<"\nComplex Number is:\t";
+			   	cout<<real<<" + "<<imag<<" i"<<endl;
+			}
+		friend complex operator + (complex c1 , complex c2);
+	 };
+
+   complex operator +(complex c1 , complex c2)
+   {
+   		   complex c;
+   		   c.real=c1.real+c2.real;
+   		   c.imag=c1.imag+c2.imag;
+   		   return c;
+   }
+   
+   
+       int main( )
+      {
+   		complex c1,c2,c3;
+   		cout<<"Enter first complex"<<endl;
+   		c1.read();
+   		cout<<"\nEnter second complex"<<endl;
+   		c2.read();
+   		c3=c1+c2;
+   		c3.show();
+   		return 0;
+      }
+
+OUTPUT  :
+ 
+
+Q7.Implement Complex Arithmetic [+, -, *, /, ~, ++(post/pre), --(post/pre))] {Operator Overloading}.
+
+Sol  :
+#include<iostream>
+#include<conio.h>
+using namespace std;
+class cmplx{
+      int real,img;
+      public:
+     	 cmplx(int r=0,int i=0)
+	 {
+                real=r;
+                img=i;
+     	  }
+     	 cmplx operator +(cmplx c1)
+	 {
+            	cmplx temp;
+        	            temp.real=real+c1.real;
+           	 	temp.img=img+c1.img;
+            	return temp;
+     	 }
+     	cmplx operator -(cmplx c1)
+	{
+            	cmplx temp;
+            	temp.real=real-c1.real;
+           		temp.img=img-c1.img;
+            	return temp;
+     	 }
+     	cmplx operator *(cmplx c1)
+	{
+            	cmplx temp;
+            	temp.real=real*c1.real-img*c1.img;
+            	temp.img=real*c1.img+c1.real*img;
+            	return temp;
+      	}
+      	cmplx operator ++(int)
+	{
+    		cmplx temp;
+    		temp.real = real++;
+    		temp.img = img++;
+    		return temp;
+      	}
+      	cmplx operator ++()
+	{
+            	cmplx temp;
+            	temp.real=++real;
+            	temp.img=++img;
+            	return *this;
+      	}
+      	cmplx operator --()
+	{
+            	cmplx temp;
+            	temp.real=real-1;
+            	temp.img=img-1;
+            	return temp;
+      	}
+      	cmplx operator --(int)
+	{
+            	cmplx temp;
+           	 	temp.real=real-1;
+            	temp.img=img-1;
+            	return temp;
+      	}
+      	void print()
+	{
+           		cout<<real<<"+"<<img<<+"i"<<"\n";
+      	}
+                           
+};
+               
+int main()
+{
+    cmplx c1(2,3);
+    cout<<"c1=";
+    c1.print();
+    cmplx c2(3,4);
+    cout<<"c2=";
+    c2.print();
+    
+    
+    cout<<"ADDITION\t";
+    cmplx c3=c1+c2;
+    cout<<"c3=";
+    c3.print();
+    
+    
+    cout<<"SUBTRACTION\t";
+    cmplx c4=c1-c2;
+    cout<<"c4=";
+    c4.print();
+    
+    cout<<"MULTIPLICATION\t";
+    cmplx c5=c1*c2;
+    cout<<"c5=";
+    c5.print();
+    
+    cout<<"PREINCREMENT\t";
+    cmplx c7=++c1;
+    cout<<"c7=";
+    c7.print();
+    
+    cout<<"POSTINCREMENT\t";
+    cmplx c6=c1++;
+    cout<<"c6=";
+    c6.print();
+    
+    cout<<"POSTDECREMENT\t";
+    cmplx c8=c1--;
+    cout<<"c8=";
+    c8.print();
+    
+    cout<<"PREDECREMENT\t";
+    cmplx c9= --c1;
+    cout<<"c9=";
+    c9.print();
+    getch();
+    return 0;
+}
+
+OUTPUT  :
+ 
+
+
+Q8.Implement a custom string class that supports concatenation [overloaded +] and comparison[overloaded ==] operations.
+
+Sol  :
+#include<iostream>
+#include<string.h>
+using namespace std;
+
+class CString
+{
+    public:
+        char str[20];
+    public:
+        void get_string()
+        {
+                cout<<"\n Enter String    :   ";
+                cin>>str;
+        }
+        void display()
+        {
+                cout<<str;
+        }	
+        CString operator+(CString x)  //Concatenating String
+        {
+                CString s;
+                strcat(str, x.str);
+                strcpy(s.str, str);
+                return s;
+        }
+        int operator==(CString &t);   //Comparing String
+};
+int CString::operator==(CString &t)  
+{
+        for(int i=0; str[i]!='_'; i++)
+        {
+                for(int j=0; t.str[j]!='_'; j++)
+                {
+                        if(str[i]==t.str[j])
+                        {
+                                return 0;
+                        }
+                        else
+                        {
+                                return 1;
+                        }
+                }
+        }
+}
+int main()
+{
+        CString str1, str2, str3;
+        int result=0;
+
+        str1.get_string();
+        str2.get_string();
+        str3=str1+str2;        
+        cout<<"\n\n Concatenated String is    :  ";
+        str3.display();
+
+        result=str1==str2;  
+        if(result==0)
+        {
+                cout<<"\n\nBoth Strings are Equal";
+        }
+        else
+        {
+                cout<<"\n\nBoth Strings are Not Equal";
+        }
+        return 0;
+}
+
+
+OUTPUT  :
+ 
+
+
+Q9.Demonstrate the working of "SUPER" keyword.
+
+Sol :
+import java.io.*;
+
+class PersonSuper
+{ 
+      private String name; 
+      PersonSuper(String s) 
+      {   
+            setName(s); 
+      } 
+      public void setName(String s) 
+      { 
+        	name = s; 
+      } 
+      public String getName() 
+      { 
+        	return name; 
+      } 
+      public void display() 
+      { 
+        	System.out.println("Name = " + name); 
+      } 
+} 
+    class Employee extends PersonSuper 
+  {   
+       private int empid; 
+       Employee(String sname,int id) //Constructor Method 
+       { 
+         		super(sname); 
+         		setEmpid(id); 
+       } 
+       public void setEmpid(int id) 
+       { 
+        	    empid = id; 
+       } 
+       public int getEmpid() 
+       { 
+         	     return empid; 
+       } 
+       public void display() 
+       {
+		super.display(); 
+         		System.out.println("Empid = " + empid); 
+       } 
+   } 
+    class Manager extends Employee 
+  { 
+      	private String Designation ; 
+	private int experience; 
+      Manager(String sname,int id,String D,int exp) 
+      {      
+        	 super(sname,id); 
+        	 Designation = D; 
+        	 experience = exp; 
+      } 
+      public void display() 
+      { 
+        		super.display(); 
+        		System.out.println("Designation = " + Designation); 
+       		System.out.println("Experience = " + experience); 
+      } 
+  }
+    class MultilevelInheritance 
+     { 
+      	public static void main(String[] args) throws IOException 
+      	{ 
+        		Manager m = new Manager("John Smith",1,"Sr. Manager",7); 
+         		m.display(); 
+      	} 
+ } 
+
+OUTPUT :
+ 
+
+Q10.Program for inheritance using interface.
+
+Sol :
+
+interface Figure
+{
+	void Area();
+
+}
+
+class Rectangle implements Figure
+{
+
+	double dim1,dim2 ;
+	Rectangle(double dim1,double dim2)
+	{
+
+		this.dim1= dim1;
+		this.dim2=dim2;
+
+	}
+	
+	public void Area()
+	{
+
+
+	System.out.println("Area  of rectangle :"+(dim1*dim2));
+	
+	}
+
+}
+
+class Triangle implements Figure
+{
+
+	double dim1,dim2 ;
+	Triangle(double dim1,double dim2)
+	
+	{
+
+		this.dim1 = dim1;
+		this.dim2=dim2 ;
+
+
+	}
+	
+	public void Area()
+	{
+
+		System.out.println("Area of triangle : "+((0.5)*(dim1*dim2)));
+
+	}
+
+}
+
+class Circle implements Figure
+{
+
+        double dim1 ;
+        Circle(double dim1)
+       {
+                this.dim1 = dim1;
+        }
+
+        public void Area()
+        {
+
+                System.out.println("Area of Circle : "+((3.14)*(dim1*dim1)));
+
+        }
+
+}
+
+class Abcd
+{
+	public static void main(String args[])
+		{
+
+			Figure f;
+			Rectangle r = new Rectangle(3,2);		
+			r.Area();
+			Triangle t = new Triangle(5,3);
+			t.Area();
+			Circle c = new Circle(7);
+			c.Area();
+			f= r;
+			f.Area() ;
+			f=t;
+			f.Area() ; 
+			f=c ;
+			f.Area();
+		}
+
+}
+
+OUTPUT :
+
+ 
+
+Q11.Write a program to sort 3 arrays using threads.
+
+Sol :
+import java.util.Random;
+import java.util.Arrays;
+import java.util.Scanner;
+class Gen extends Thread
+{
+	int i,array1[],array2[],array3[];
+	public Gen(int array1[],int array2[],int array3[])
+	{
+		this.array1=array1;
+		this.array2=array2;
+		this.array3=array3;
+	}
+	public void run()
+	{
+		Random rand=new Random();
+		System.out.println("Generated Random Numbers");
+		System.out.println("\tArray1 ");
+
+		for(i=0;i<5;i++)
+		{
+			array1[i]=rand.nextInt(100);
+			System.out.println(array1[i]);
+		}
+
+		 System.out.println("\tArray2 ");
+
+                for(i=0;i<5;i++)
+                {
+                        array2[i]=rand.nextInt(100);
+
+			System.out.println(array2[i]);
+                }
+
+                for(i=0;i<5;i++)
+                {
+                        array3[i]=rand.nextInt(100);
+
+                        System.out.println(array3[i]);
+                }
+	}
+}
+class Sort extends Thread
+{
+	private int array1[],array2[],array3[];
+	public Sort(int array1[],int array2[],int array3[])
+	{		this.array1=array1;
+                this.array2=array2;
+                this.array3=array3;
+	}
+	public void run()
+	{
+		int i;
+		Arrays.sort(array1);
+		 Arrays.sort(array2);
+		 Arrays.sort(array3);
+		System.out.println("Sorted Array 1");
+		for(i=0;i<20;i++)
+		{
+			System.out.println(array1[i]);
+		}
+
+		System.out.println("Sorted Array 2");
+                for(i=0;i<20;i++)
+                {
+                        System.out.println(array2[i]);
+                }
+		
+		System.out.println("Sorted Array 3");
+                for(i=0;i<20;i++)
+                {
+                        System.out.println(array3[i]);
+                }
+
+
+
+		System.out.println("\n");
+	}
+}
+class Search extends Thread
+{
+	private int array1[],array2[],array3[],ele1,ele2,ele3;
+	public Search(int array1[],int array2[],int array3[])
+	{
+		this.array1=array1;
+		this.array2=array2;
+                this.array3=array3;
+
+
+	}
+	public void run()
+	{
+		int i,f1=0,f2=0,f3=0;
+		Scanner s=new Scanner(System.in);
+		System.out.println("Enter Element to search for array1");
+		ele1=s.nextInt();
+		for(i=0;i<20;i++)
+		{
+			if(array1[i]==ele1)
+			{
+				f1=1;
+			System.out.println("Element "+ele1+" found at index "+i);
+				break;
+			}
+		}
+		if(f1==0)
+		System.out.println("Element "+ele1+" not found in array1");
+
+		System.out.println("Enter Element to search for array2");
+                ele2=s.nextInt();
+                for(i=0;i<20;i++)
+                {
+                        if(array2[i]==ele2)
+                        {
+                                f2=1;
+                                System.out.println("Element "+ele2+" found at index "+i);
+                                break;
+                        }
+                }
+                if(f2==0)
+                        System.out.println("Element "+ele2+" not found in array1");
+		System.out.println("Enter Element to search for array3");
+                ele3=s.nextInt();
+                for(i=0;i<20;i++)
+                {
+                        if(array3[i]==ele3)
+                        {
+                                f3=1;
+                                System.out.println("Element "+ele3+" found at index "+i);
+                                break;
+                        }
+                }
+                if(f3==0)
+                        System.out.println("Element "+ele3+" not found in array3");
+
+		
+	}
+}
+class ThreadDemo
+{
+	public static void main(String args[])
+	{
+		int i;
+		int array1[]= new int[20];
+		int array2[] = new int[20];
+		int array3[] = new int[20];
+		Gen g=new Gen(array1,array2,array3);
+		Sort s=new Sort(array1,array2,array3);
+		Search sea=new Search(array1,array2,array3);
+		  
+		g.start();
+		try
+		{
+			s.sleep(100);
+		}catch(InterruptedException e){}
+		s.start();
+		try
+		{
+			sea.sleep(100);
+
+		}catch(InterruptedException e){}
+		sea.start();
+
+	}
+}
+
+OUTPUT :
+ 
+
+Q12.Create class square,circle and inherit from class shapes and implement run time polymorphism (virtual function) to display area of respective objects.
+
+Sol :
+#include <iostream>
+using namespace std;
+
+class Shape                   
+{
+    protected:
+       float l;
+    public:
+       void getData()       
+       {
+           cin >> l;
+       }
+       
+       virtual float calculateArea() = 0;
+};
+
+class Square : public Shape
+{
+    public:
+       float calculateArea()
+       {   return l*l;  }
+};
+
+class Circle : public Shape
+{
+    public:
+       float calculateArea()
+       { return 3.14*l*l; }
+};
+
+int main()
+{
+    Square s;
+    Circle c;
+
+    cout << "Enter length to calculate the area of a square: ";
+    s.getData();
+    cout<<"Area of square: " << s.calculateArea();
+    cout<<"\nEnter radius to calculate the area of a circle: ";
+    c.getData();
+    cout << "Area of circle: " << c.calculateArea();
+
+    return 0;
+}
+
+OUTPUT :
+ 
